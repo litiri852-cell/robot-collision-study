@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Stopping Distance</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="hero">
+        <h1>How Does Sensor Delay Affect Robot Stopping Distance?</h1>
+        <p>A student research demonstration comparing sensor latency, motor power, and floor surfaces.</p>
+        <span class="badge">Tianrui Li - Ayala High School</span>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>Research Question</h2>
+            <p>How do sensor delay, initial motor power, and floor surface affect the final distance between a moving robot and a wall?</p>
+        </div>
+
+        <div class="card summary-grid">
+            <div class="summary-box">
+                <p class="summary-title">Pearson Correlation (r)</p>
+                <p class="summary-value">-0.810</p>
+            </div>
+            <div class="summary-box">
+                <p class="summary-title">Model R-Squared</p>
+                <p class="summary-value">71.0%</p>
+            </div>
+            <div class="summary-box">
+                <p class="summary-title">Extreme Latency (500ms)</p>
+                <p class="summary-value" style="color: #e74c3c;">0 cm (Collision)</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Interactive Results</h2>
+            <label for="surfaceSelect"><strong>Choose a Floor Surface: </strong></label>
+            <select id="surfaceSelect">
+                <option value="wooden floor">Wooden Floor (100% Motor Power)</option>
+                <option value="yoga mat">Yoga Mat (100% Motor Power)</option>
+            </select>
+            
+            <div class="chart-container">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Sample Data</h2>
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Sensor Delay (ms)</th>
+                        <th>Floor Surface</th>
+                        <th>Stopping Distance (cm)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
