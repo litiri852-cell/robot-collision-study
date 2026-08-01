@@ -5,27 +5,48 @@ async function loadData() {
     const data = await response.text();
     const rows = data.split('\n').slice(1);
     
-    const parsedData = { 'wooden floor': [], 'yoga mat': [] };
+    const chartData = {
+        'wooden floor': { '10': [], '50': [], '100': [], '200': [], '500': [] },
+        'yoga mat': { '10': [], '50': [], '100': [], '200': [], '500': [] }
+    };
+
     const tbody = document.querySelector('#dataTable tbody');
     tbody.innerHTML = '';
 
     rows.forEach(row => {
+        if (!row.trim()) return;
         const columns = row.split(',');
-        if (columns.length === 3) {
+        if (columns.length >= 4) {
             const delay = columns[0].trim();
-            const surface = columns[1].trim();
-            const distance = parseFloat(columns[2].trim());
+            const power = columns[1].trim();
+            const surface = columns[2].trim();
+            const distance = parseFloat(columns[3].trim());
 
-            if (parsedData[surface]) {
-                parsedData[surface].push(distance);
+            // 收集数据用来计算平均值
+            if (chartData[surface] && chartData[surface][delay]) {
+                chartData[surface][delay].push(distance);
             }
 
+            // 在网页上渲染完整的120行数据表
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${delay} ms</td><td>${surface}</td><td>${distance} cm</td>`;
+            tr.innerHTML = `<td>${delay} ms</td><td>${power}</td><td>${surface}</td><td>${distance} cm</td>`;
             tbody.appendChild(tr);
         }
     });
-    return parsedData;
+
+    // 自动计算两种地板在不同延迟下的平均距离
+    const avgData = { 'wooden floor': [], 'yoga mat': [] };
+    const delays = ['10', '50', '100', '200', '500'];
+    
+    ['wooden floor', 'yoga mat'].forEach(surf => {
+        delays.forEach(d => {
+            const arr = chartData[surf][d];
+            const avg = arr.length > 0 ? (arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1) : 0;
+            avgData[surf].push(parseFloat(avg));
+        });
+    });
+
+    return avgData;
 }
 
 async function createChart() {
@@ -48,7 +69,7 @@ async function createChart() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: { y: { beginAtZero: true, max: 30 } }
+            scales: { y: { beginAtZero: true, max: 25 } }
         }
     });
 
