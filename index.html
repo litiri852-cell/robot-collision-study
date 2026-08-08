@@ -9,70 +9,57 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
     
-    <!-- 引入图表库 Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* 改回清爽的 Canva 极简背景：非常淡的灰蓝色 */
-        body {
-            background: #f0f4f8 !important;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
+        /* Canva 极简灰蓝学术背景 */
+        body { background: #f0f4f8 !important; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .reveal .slide-background { background: transparent !important; }
 
-        /* 白色卡片，带一点圆角和非常柔和的阴影 */
+        /* 白色高级卡片 */
         .canva-card {
             background: #ffffff;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            padding: 40px !important;
+            padding: 40px 50px !important;
             box-sizing: border-box;
             width: 100%;
             height: 100%;
             border: 1px solid #e1e8ed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        /* 标题改成深海蓝色，圆角背景去掉，显得更简洁现代 */
+        /* 标题样式 */
         .reveal h3 { 
-            color: #0f4c81; 
-            text-transform: none; 
-            font-weight: 800; 
-            font-size: 36px;
-            margin-bottom: 25px;
-            border-bottom: 3px solid #e1e8ed;
-            padding-bottom: 10px;
-            display: inline-block;
+            color: #0f4c81; text-transform: none; font-weight: 800; font-size: 34px;
+            margin-bottom: 20px; border-bottom: 3px solid #e1e8ed; padding-bottom: 10px; display: inline-block;
+            text-align: left;
         }
-        
-        .reveal h2 { color: #0f4c81; font-weight: 800; text-transform: none; }
+        .reveal h2 { color: #0f4c81; font-weight: 800; text-transform: none; font-size: 48px; line-height: 1.2; }
 
-        .reveal p, .reveal li { font-size: 24px; text-align: left; color: #333; line-height: 1.5; }
+        /* 文字排版：调整行高和边距使阅读更舒适 */
+        .reveal p, .reveal li { font-size: 22px; text-align: left; color: #444; line-height: 1.6; margin-bottom: 12px; }
         .center-text { text-align: center !important; }
         .highlight { color: #e74c3c; font-weight: bold; }
         
         /* 双栏排版 */
-        .two-col {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-        .col-text { flex: 1; text-align: left; }
-        .col-img { flex: 1; text-align: center; }
+        .two-col { display: flex; align-items: stretch; justify-content: space-between; gap: 30px; height: 100%; }
+        .col-text { flex: 1.3; text-align: left; display: flex; flex-direction: column; justify-content: center; }
+        .col-img { flex: 0.7; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 15px;}
         
-        /* 强制图片不准超出容器 */
-        .col-img img, .img-container img { 
-            border-radius: 8px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
-            max-width: 100%;
-            max-height: 350px;
-            object-fit: cover;
-        }
+        /* 图片限制与圆角 */
+        .col-img img { border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; object-fit: cover; }
 
-        /* 交互菜单和表格样式 */
-        select { padding: 10px; font-size: 20px; border: 2px solid #0f4c81; border-radius: 8px; cursor: pointer; background: white; font-weight: bold; color: #0f4c81;}
-        .table-wrapper { height: 320px; overflow-y: auto; margin-top: 15px; border-radius: 8px; border: 1px solid #eee; }
+        /* 图片网格 */
+        .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
+        .img-grid img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .img-grid .full-width { grid-column: span 2; height: 160px; }
+
+        /* 表格和下拉菜单 */
+        select { padding: 8px; font-size: 18px; border: 2px solid #0f4c81; border-radius: 8px; cursor: pointer; background: white; font-weight: bold; color: #0f4c81;}
+        .table-wrapper { height: 350px; overflow-y: auto; margin-top: 15px; border-radius: 8px; border: 1px solid #eee; }
         table { width: 100%; border-collapse: collapse; font-size: 18px; background: white; }
         th { background-color: #0f4c81; color: white; padding: 12px; position: sticky; top: 0; z-index: 2;}
         td { padding: 10px; border-bottom: 1px solid #eee; text-align: center; }
@@ -83,125 +70,132 @@
     <div class="reveal">
         <div class="slides">
 
-            <!-- 封面页 -->
+            <!-- 封面 -->
             <section>
-                <div class="canva-card" style="display: flex; flex-direction: column; justify-content: center;">
-                    <h2>How Sensor Delay Affects Robot Stopping Distance</h2>
+                <div class="canva-card" style="align-items: center;">
+                    <h2>How Sensor Delay Affects <br>Robot Stopping Distance</h2>
                     <br>
-                    <p class="center-text" style="font-size: 28px; font-weight: bold;">San Bernardino Science & Engineering Fair</p>
+                    <p class="center-text" style="font-size: 26px; font-weight: bold; color: #333;">San Bernardino Science & Engineering Fair</p>
                     <p class="center-text" style="color: #666;">Presenter: Tianrui Li</p>
                 </div>
             </section>
 
-            <!-- 1. Abstract -->
+            <!-- Abstract -->
             <section>
                 <div class="canva-card">
-                    <h3>1. Abstract</h3>
+                    <h3>Abstract</h3>
+                    <p><strong>Purpose:</strong> This study investigates the critical safety margins in autonomous systems by analyzing how sensor processing delay, initial motor power, and floor surface friction affect a robot's stopping distance.</p>
+                    <p><strong>Methodology:</strong> A rigorous factorial design consisting of 120 independent trials was conducted. The robot was tested across 5 delay levels (10-500ms), 4 power levels (25-100%), and 2 distinct surface materials.</p>
+                    <p><strong>Key Findings:</strong> Statistical analysis revealed a strong negative correlation (r = -0.810) between sensor delay and stopping distance. The data strongly suggests that computational latency is a more dominant risk factor in collisions than initial velocity.</p>
+                </div>
+            </section>
+
+            <!-- Intro, Question, Hypotheses (分块同页) -->
+            <section>
+                <div class="canva-card" style="justify-content: flex-start; overflow-y: auto;">
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #0f4c81; font-size: 26px; margin: 0 0 10px 0;">1. Introduction</h4>
+                        <p style="font-size: 20px; margin: 0;">In real-world applications, autonomous systems—such as self-driving cars and warehouse AGVs—experience inherent processing latency between detecting an obstacle and executing a full stop. This delay neutralizes safety algorithms and causes physical collisions.</p>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #0f4c81; font-size: 26px; margin: 0 0 10px 0;">2. Research Question</h4>
+                        <p style="font-size: 20px; margin: 0;">How do programmed sensor delay, initial motor power, and kinetic friction from the floor surface mathematically interact to determine the final distance between a moving robot and a wall?</p>
+                    </div>
+                    <div>
+                        <h4 style="color: #0f4c81; font-size: 26px; margin: 0 0 10px 0;">3. Hypotheses</h4>
+                        <ul style="font-size: 20px; margin: 0; padding-left: 20px;">
+                            <li style="margin-bottom: 5px;"><span class="highlight">Delay:</span> Increasing sensor delay will drastically decrease the final distance, as momentum carries the chassis forward unbraked.</li>
+                            <li style="margin-bottom: 5px;"><span class="highlight">Power:</span> Higher power (speed) will result in a shorter stopping distance due to increased inertia.</li>
+                            <li><span class="highlight">Surface:</span> High-friction surfaces (Yoga Mat) will decelerate the robot faster, leaving a safer distance.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Variables & Significance -->
+            <section>
+                <div class="canva-card">
+                    <h3>Variables & Significance</h3>
+                    <p><strong>Significance:</strong> Modeling these factors on a small-scale robot provides actionable insights into how commercial autonomous vehicles should prioritize hardware upgrades (e.g., faster CPU vs. better brakes).</p>
+                    <hr style="border: 1px solid #eee; margin: 15px 0;">
+                    <p><strong>Experimental Variables:</strong></p>
                     <ul>
-                        <li><strong>Purpose:</strong> Investigate how sensor delay, initial motor power, and floor surface affect stopping distance.</li>
-                        <li><strong>Method:</strong> 120 trials testing 5 delay levels (10-500ms), 4 power levels, and 2 surfaces.</li>
-                        <li><strong>Result:</strong> Sensor delay had a strong negative correlation (r = -0.81). System latency is the most critical factor for collision avoidance.</li>
+                        <li><strong>Independent Variables:</strong> 
+                            <br>1. Sensor delay (10, 50, 100, 200, 500 ms)
+                            <br>2. Initial motor power (25%, 50%, 75%, 100%)
+                            <br>3. Floor surface (Low friction: Wooden floor vs. High friction: Yoga mat).
+                        </li>
+                        <li><strong>Dependent Variable:</strong> Final stopping distance measured from the wall (cm).</li>
+                        <li><strong>Controlled Variables:</strong> Robot chassis, battery charge level, starting position, and fixed obstacle.</li>
                     </ul>
                 </div>
             </section>
 
-            <!-- 2. Introduction -->
-            <section>
-                <div class="canva-card">
-                    <h3>2. Introduction & Question</h3>
-                    <p><strong>Background:</strong> Autonomous systems (like self-driving cars or warehouse robots) experience latency between sensing an obstacle and executing a full stop. This delay reduces the safety margin.</p>
-                    <br>
-                    <p><strong>Research Question:</strong> How do sensor delay, initial motor power, and floor surface affect the final distance between a moving robot and a wall?</p>
-                </div>
-            </section>
-
-            <!-- 3. Hypothesis -->
-            <section>
-                <div class="canva-card">
-                    <h3>3. Hypotheses</h3>
-                    <ul>
-                        <li><span class="highlight">Sensor Delay:</span> Increasing delay decreases the final distance from the wall (momentum carries it further).</li>
-                        <li><span class="highlight">Motor Power:</span> Higher power causes the robot to stop closer to the wall (harder to brake).</li>
-                        <li><span class="highlight">Floor Surface:</span> Different surfaces create different levels of kinetic friction, altering the braking distance.</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- 5. Materials -->
+            <!-- Materials & Design -->
             <section>
                 <div class="canva-card two-col">
                     <div class="col-text">
-                        <h3>4. Significance & Materials</h3>
-                        <p>This project mathematically models real-world collision avoidance systems.</p>
+                        <h3>Materials & Design</h3>
+                        <p><strong>Hardware Setup:</strong></p>
                         <ul>
-                            <li>Lafvitech 2WD Mobile Robot</li>
-                            <li>HC-SR04 Ultrasonic Sensor</li>
-                            <li>Arduino (C++) for logic</li>
-                            <li>Python for Data Analysis</li>
+                            <li>Lafvitech 2WD Programmable Mobile Robot.</li>
+                            <li>HC-SR04 Ultrasonic Obstacle Sensor for distance detection.</li>
+                            <li>Arduino UNO (C++) for logic execution and delay simulation.</li>
                         </ul>
+                        <p><strong>Factorial Design:</strong></p>
+                        <p>To ensure data reliability and account for outliers, the experiment utilized a full factorial design. Every combination of delay, power, and surface was tested with 3 repetitions, yielding exactly 120 unique data points.</p>
                     </div>
                     <div class="col-img">
-                        <img src="robot.png" alt="Robot">
+                        <img src="robot.png" alt="Robot" style="max-height: 380px;">
                     </div>
                 </div>
             </section>
 
-            <!-- 6. Experimental Design (修复了溢出的图片) -->
+            <!-- Procedure & Collection (带三张拼图) -->
             <section>
-                <div class="canva-card">
-                    <h3>5. Experimental Design</h3>
-                    <p><strong>Factorial Design:</strong> 120 trials across two unique surfaces to test varying friction levels.</p>
-                    <div class="two-col" style="margin-top: 20px;">
-                        <!-- 限制宽度，强制并排 -->
-                        <div style="flex: 1; text-align: center;">
-                            <img src="wooden.png" alt="Wooden Floor" style="width: 100%; height: 220px; object-fit: cover; border-radius: 8px;">
-                            <p style="font-size: 18px; margin-top: 5px; text-align: center;">Surface A: Wooden Floor</p>
-                        </div>
-                        <div style="flex: 1; text-align: center;">
-                            <img src="Yoga mat.png" alt="Yoga Mat" style="width: 100%; height: 220px; object-fit: cover; border-radius: 8px;">
-                            <p style="font-size: 18px; margin-top: 5px; text-align: center;">Surface B: Yoga Mat</p>
+                <div class="canva-card two-col">
+                    <div class="col-text">
+                        <h3>Procedure & Data Collection</h3>
+                        <p><strong>Execution Protocol:</strong></p>
+                        <ol style="font-size: 20px; color: #444; line-height: 1.5; padding-left: 20px;">
+                            <li>Position the robot at the designated starting line on the selected surface.</li>
+                            <li>Upload the specific delay and power parameters via Arduino IDE.</li>
+                            <li>Activate the robot and allow the ultrasonic sensor to detect the wall and trigger the braking mechanism.</li>
+                            <li>Measure the final resting distance using a fixed measuring tape.</li>
+                        </ol>
+                        <p><strong>Safety & Extreme Condition:</strong></p>
+                        <p style="font-size: 20px;">Low voltage was maintained to prevent hardware damage. If the robot failed to stop and touched the wall, a distance of <span class="highlight">0 cm (Collision)</span> was formally recorded.</p>
+                    </div>
+                    <div class="col-img" style="flex: 0.9;">
+                        <div class="img-grid">
+                            <img src="wooden.png" alt="Wooden Floor">
+                            <img src="Yoga mat.png" alt="Yoga Mat">
+                            <img src="distance.png" alt="Measurement" class="full-width">
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 7. Data Collection -->
-            <section>
-                <div class="canva-card two-col">
-                    <div class="col-text">
-                        <h3>6. Data Collection</h3>
-                        <ul>
-                            <li><strong>Safety Protocol:</strong> Clear area, low voltage power to prevent damage.</li>
-                            <li><strong>Measurement:</strong> Final distance measured in cm from a fixed reference wall.</li>
-                            <li><strong>Collision:</strong> A result of 0 cm indicates a complete failure to stop in time.</li>
-                        </ul>
-                    </div>
-                    <div class="col-img">
-                        <img src="distance.png" alt="Measurement">
-                    </div>
-                </div>
-            </section>
-
-            <!-- 8. Interactive Chart -->
+            <!-- Interactive Chart -->
             <section>
                 <div class="canva-card">
-                    <h3>7. Interactive Dashboard</h3>
+                    <h3>Interactive Dashboard</h3>
                     <div class="center-text">
                         <select id="surfaceSelect">
-                            <option value="wooden floor">Displaying: Wooden Floor</option>
-                            <option value="yoga mat">Displaying: Yoga Mat</option>
+                            <option value="wooden floor">Displaying: Wooden Floor (Avg over all powers)</option>
+                            <option value="yoga mat">Displaying: Yoga Mat (Avg over all powers)</option>
                         </select>
                     </div>
-                    <div style="height: 350px; width: 100%; margin-top: 15px;">
+                    <div style="height: 380px; width: 100%; margin-top: 15px;">
                         <canvas id="myChart"></canvas>
                     </div>
                 </div>
             </section>
 
-            <!-- 9. Full Dataset -->
+            <!-- Full Dataset -->
             <section>
                 <div class="canva-card">
-                    <h3>8. Full Dataset (120 Trials)</h3>
+                    <h3>Full Dataset (120 Trials)</h3>
                     <div class="table-wrapper">
                         <table id="dataTable">
                             <thead>
@@ -218,14 +212,15 @@
                 </div>
             </section>
 
-            <!-- 11. Results: Correlation -->
+            <!-- Analysis & Correlation -->
             <section>
                 <div class="canva-card two-col">
                     <div class="col-text">
-                        <h3>9. Correlation Results</h3>
-                        <p>Pearson correlation analysis showed:</p>
-                        <p><strong>r = -0.810</strong></p>
-                        <p>This proves a <span class="highlight">strong negative correlation</span> between sensor delay and stopping distance.</p>
+                        <h3>Data Analysis & Correlation</h3>
+                        <p><strong>Methodology:</strong> Data was aggregated using Python (Pandas). Scikit-learn was utilized to extract Pearson correlation coefficients and build predictive models.</p>
+                        <p><strong>Correlation Findings:</strong></p>
+                        <p>The generated Heatmap revealed a coefficient of <strong>r = -0.810</strong> between Sensor Delay and Distance to wall.</p>
+                        <p>This confirms a <span class="highlight">strong negative correlation</span>, statistically validating that as latency increases, safety margin decreases rapidly.</p>
                     </div>
                     <div class="col-img">
                         <img src="correlation_heatmap.png" alt="Heatmap">
@@ -233,15 +228,20 @@
                 </div>
             </section>
 
-            <!-- 12. Results: Regression -->
+            <!-- Regression Model -->
             <section>
                 <div class="canva-card two-col">
                     <div class="col-text">
-                        <h3>10. Regression Model</h3>
-                        <p>Multiple Linear Regression explained <strong>71%</strong> of the variance (R² = 0.710).</p>
+                        <h3>Regression Model & Interpretation</h3>
+                        <p>A Multiple Linear Regression model was deployed, explaining <strong>71%</strong> of the total variance (R² = 0.710).</p>
                         <p style="background: #f8f9fa; padding: 10px; border-left: 5px solid #0f4c81; font-size: 20px;">
                             Y = 20.095 - 0.035(Delay) - 0.960(Power) + 3.443(Surface)
                         </p>
+                        <p><strong>Statistical Significance (p-values):</strong></p>
+                        <ul style="font-size: 20px;">
+                            <li><strong>Delay & Surface (p < 0.05):</strong> Highly significant. The Yoga mat added ~3.44 cm of safety distance due to friction.</li>
+                            <li><strong>Motor Power (p = 0.48):</strong> Exceeded 0.05, indicating it is not statistically significant in this linear model, contrary to initial assumptions.</li>
+                        </ul>
                     </div>
                     <div class="col-img">
                         <img src="multiple_regression_plot.png" alt="Regression Plot">
@@ -249,13 +249,14 @@
                 </div>
             </section>
 
-            <!-- 14. Zero-Distance -->
+            <!-- Extreme Condition -->
             <section>
                 <div class="canva-card two-col">
                     <div class="col-text">
-                        <h3>11. Extreme Latency</h3>
-                        <p>At <strong>500 ms</strong> delay, the robot consistently recorded 0 cm (Collision).</p>
-                        <p>The system's processing latency was so severe that physical momentum forced a crash before the brake command could even be executed by the Arduino.</p>
+                        <h3>Extreme Condition: Collision</h3>
+                        <p>The most critical observation occurred at the extreme latency setting.</p>
+                        <p>At a programmed delay of <strong>500 ms</strong>, the robot consistently recorded distances of 0 cm across almost all power levels.</p>
+                        <p>This phenomenon demonstrates that a sensor's accuracy becomes irrelevant if the system's processing time allows physical momentum to overtake the braking zone. The robot essentially crashed before the Arduino executed the stop command.</p>
                     </div>
                     <div class="col-img">
                         <img src="zero distance.png" alt="Collision">
@@ -263,14 +264,29 @@
                 </div>
             </section>
 
-            <!-- 15. Conclusion -->
+            <!-- Discussion & Conclusion -->
             <section>
                 <div class="canva-card">
-                    <h3>12. Conclusion & Future Work</h3>
+                    <h3>Discussion & Conclusion</h3>
+                    <p><strong>Hypothesis Evaluation:</strong> The hypotheses were partially supported. Delay and surface friction behaved as expected, but motor power did not linearly impact the final distance as significantly as predicted.</p>
+                    <p><strong>Core Conclusion:</strong></p>
+                    <p>In autonomous engineering, computational speed is paramount. A delay of merely half a second (500ms) is enough to neutralize a vehicle's collision avoidance system entirely. Furthermore, environmental factors like road friction (simulated by the Yoga mat) act as critical passive safety buffers that can compensate for minor system latencies.</p>
+                </div>
+            </section>
+
+            <!-- Limitations & Future Work -->
+            <section>
+                <div class="canva-card">
+                    <h3>Limitations & Future Research</h3>
+                    <p><strong>Experimental Limitations:</strong></p>
                     <ul>
-                        <li><strong>Conclusion:</strong> A fast sensor is useless if the system processing delay is too long. Yoga mats (high friction) significantly improved safety margins.</li>
-                        <li><strong>Limitations:</strong> Zero-distance results grouped minor touches and hard crashes into the same value.</li>
-                        <li><strong>Future Engineering:</strong> Implement adaptive braking algorithms that adjust force based on surface friction and active latency tracking.</li>
+                        <li>Motor power percentages (25-100%) were an approximation of output, not a direct measurement of velocity (m/s).</li>
+                        <li>The "0 cm" result grouped minor bumper touches and severe hard crashes into the same numerical value.</li>
+                    </ul>
+                    <p><strong>Future Engineering Applications:</strong></p>
+                    <ul>
+                        <li>Develop an adaptive braking algorithm that actively calculates surface friction and adjusts stopping force accordingly.</li>
+                        <li>Implement a machine-learning logistic regression model to predict the *probability* of a collision rather than just the distance.</li>
                     </ul>
                 </div>
             </section>
@@ -287,7 +303,6 @@
         </div>
     </div>
 
-    <!-- 运行脚本 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
     <script src="script.js"></script>
     <script>
