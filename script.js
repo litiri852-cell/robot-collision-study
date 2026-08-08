@@ -1,6 +1,7 @@
 let myChart = null;
 
 async function loadData() {
+    // 从你之前上传的 data.csv 读取数据
     const response = await fetch('data.csv');
     const data = await response.text();
     const rows = data.split('\n').slice(1);
@@ -10,31 +11,21 @@ async function loadData() {
         'yoga mat': { '10': [], '50': [], '100': [], '200': [], '500': [] }
     };
 
-    const tbody = document.querySelector('#dataTable tbody');
-    tbody.innerHTML = '';
-
     rows.forEach(row => {
         if (!row.trim()) return;
         const columns = row.split(',');
         if (columns.length >= 4) {
             const delay = columns[0].trim();
-            const power = columns[1].trim();
             const surface = columns[2].trim();
             const distance = parseFloat(columns[3].trim());
 
-            // 收集数据用来计算平均值
             if (chartData[surface] && chartData[surface][delay]) {
                 chartData[surface][delay].push(distance);
             }
-
-            // 在网页上渲染完整的120行数据表
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${delay} ms</td><td>${power}</td><td>${surface}</td><td>${distance} cm</td>`;
-            tbody.appendChild(tr);
         }
     });
 
-    // 自动计算两种地板在不同延迟下的平均距离
+    // 计算平均值
     const avgData = { 'wooden floor': [], 'yoga mat': [] };
     const delays = ['10', '50', '100', '200', '500'];
     
@@ -51,39 +42,51 @@ async function loadData() {
 
 async function createChart() {
     const dataObj = await loadData();
-    const ctx = document.getElementById('myChart').getContext('2d');
+    const ctx = document.getElementById('myChart');
+    if (!ctx) return; // 防止 PPT 没加载完报错
+
     const surfaceSelect = document.getElementById('surfaceSelect');
 
-    myChart = new Chart(ctx, {
+    myChart = new Chart(ctx.getContext('2d'), {
         type: 'bar',
         data: {
             labels: ['10 ms', '50 ms', '100 ms', '200 ms', '500 ms'],
             datasets: [{
                 label: 'Average Distance to Wall (cm)',
                 data: dataObj['wooden floor'],
-                backgroundColor: '#85c1e9',
-                borderColor: '#3498db',
+                backgroundColor: '#3b5998',
+                borderColor: '#2c3e50',
                 borderWidth: 1
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: { y: { beginAtZero: true, max: 25 } }
+            scales: { 
+                y: { 
+                    beginAtZero: true, 
+                    max: 25,
+                    title: { display: true, text: 'Distance (cm)' }
+                },
+                x: {
+                    title: { display: true, text: 'Sensor Delay' }
+                }
+            }
         }
     });
 
+    // 下拉菜单变色逻辑
     surfaceSelect.addEventListener('change', function() {
         const selectedSurface = this.value;
         myChart.data.datasets[0].data = dataObj[selectedSurface];
         if (selectedSurface === 'yoga mat') {
-            myChart.data.datasets[0].backgroundColor = '#f5b041';
-            myChart.data.datasets[0].borderColor = '#f39c12';
+            myChart.data.datasets[0].backgroundColor = '#e74c3c'; // 瑜伽垫变成醒目的红色
         } else {
-            myChart.data.datasets[0].backgroundColor = '#85c1e9';
-            myChart.data.datasets[0].borderColor = '#3498db';
+            myChart.data.datasets[0].backgroundColor = '#3b5998'; // 木地板是深蓝色
         }
         myChart.update();
     });
 }
+
+// 启动画图程序
 createChart();
