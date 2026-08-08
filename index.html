@@ -5,19 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Robot Stopping Distance Presentation</title>
 
-    <!-- 引入 Reveal.js 的核心样式和主题 -->
+    <!-- Reveal.js 的核心样式 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
-    <!-- 这里选用 night 主题，非常适合科技风。你也可以改成 white, league, black 等 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css">
+    <!-- 换成了白底主题 (White) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/white.min.css">
     
+    <!-- 引入图表库 (Chart.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
-        /* 稍微调整一下文字大小，防止文字太多超出屏幕 */
-        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; }
-        .reveal p, .reveal li { font-size: 28px; text-align: left; }
+        /* 自定义蓝白配色和排版 */
+        .reveal h1, .reveal h2, .reveal h3 { 
+            color: #3b5998; /* 深蓝色标题 */
+            text-transform: none; 
+            font-weight: bold;
+        }
+        .reveal p, .reveal li { 
+            font-size: 28px; 
+            text-align: left; 
+            color: #333; /* 深灰色正文 */
+        }
         .center-text { text-align: center !important; }
-        .highlight { color: #50fa7b; font-weight: bold; }
-        .img-placeholder { border: 2px dashed #888; padding: 20px; color: #888; text-align: center; font-size: 20px; margin: 20px 0; }
+        .highlight { color: #e74c3c; font-weight: bold; } /* 红色高亮强调 */
+        
+        /* 下拉菜单样式 */
+        select {
+            padding: 10px;
+            font-size: 20px;
+            border: 2px solid #3b5998;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -28,128 +48,93 @@
             <section>
                 <h2>How Sensor Delay Affects Robot Stopping Distance</h2>
                 <p class="center-text">San Bernardino Science & Engineering Fair</p>
-                <p class="center-text" style="font-size: 24px; color: #aaa;">Presenter: Tianrui Li</p>
+                <p class="center-text" style="font-size: 24px; color: #7f8c8d;">Presenter: Tianrui Li</p>
             </section>
 
-            <!-- 1. Abstract -->
+            <!-- Abstract -->
             <section>
                 <h3>Abstract</h3>
                 <ul>
                     <li><strong>Purpose:</strong> Investigate how sensor delay, initial motor power, and floor surface affect stopping distance.</li>
-                    <li><strong>Method:</strong> 120 trials testing 5 delay levels (10-500ms), 4 power levels (25-100%), and 2 surfaces.</li>
+                    <li><strong>Method:</strong> 120 trials testing 5 delay levels, 4 power levels, and 2 surfaces.</li>
                     <li><strong>Result:</strong> Sensor delay had a strong negative correlation (r = -0.81).</li>
                 </ul>
             </section>
 
-            <!-- 2. Introduction & Research Problem (Section 1.1 - 1.4) -->
+            <!-- Introduction -->
             <section>
                 <h3>1. Introduction & Research Question</h3>
                 <p><strong>Background:</strong> Autonomous systems experience latency between sensing and stopping. This delay reduces the safety margin.</p>
                 <p><strong>Research Question:</strong> How do sensor delay, initial motor power, and floor surface affect the final distance between a moving robot and a wall?</p>
             </section>
 
-            <!-- 3. Hypothesis (Section 1.5 - 1.6) -->
+            <!-- Hypotheses -->
             <section>
-                <h3>Hypotheses</h3>
+                <h3>2. Hypotheses</h3>
                 <ul>
-                    <li><span class="highlight">Sensor Delay:</span> Increasing delay decreases the final distance (the robot moves further during the delay).</li>
+                    <li><span class="highlight">Sensor Delay:</span> Increasing delay decreases the final distance.</li>
                     <li><span class="highlight">Motor Power:</span> Higher power causes the robot to stop closer to the wall.</li>
                     <li><span class="highlight">Floor Surface:</span> Different surfaces create different levels of friction.</li>
                 </ul>
             </section>
 
-            <!-- 4. Variables (Section 2) -->
+            <!-- Materials (这里注意图片名字！) -->
             <section>
-                <h3>2. Variables</h3>
-                <ul>
-                    <li><strong>Independent Variables:</strong> 
-                        <ul>
-                            <li>Sensor delay (10, 50, 100, 200, 500 ms)</li>
-                            <li>Initial motor power (25%, 50%, 75%, 100%)</li>
-                            <li>Floor surface (Wooden floor vs. Yoga mat)</li>
-                        </ul>
-                    </li>
-                    <li><strong>Dependent Variable:</strong> Final distance from the wall (cm)</li>
-                    <li><strong>Controlled:</strong> Robot, starting position, obstacle, sensor, measurement method.</li>
-                </ul>
-            </section>
-
-            <!-- 5. Significance & Materials (Sections 3 & 4) -->
-            <section>
-                <h3>3 & 4. Significance and Materials</h3>
-                <p>This project models real-world collision avoidance for autonomous vehicles and warehouse robots.</p>
+                <h3>3. Significance and Materials</h3>
+                <p>This project models real-world collision avoidance.</p>
                 <ul>
                     <li>Lafvitech 2WD Programmable Mobile Robot</li>
-                    <li>HC-SR04 Obstacle Sensor</li>
-                    <li>Arduino (C++) & Python (Data Analysis)</li>
+                    <li>HC-SR04 Obstacle Sensor & Arduino (C++)</li>
                 </ul>
-                <!-- 预留图片位置 -->
-                <div class="img-placeholder">
-                    [ 🖼️ 预留位置：在这里插入 Figure D1 小车照片 ]<img src="robot.jpg" width="400">
-                    <!-- 代码示例：<img src="robot.jpg" width="400"> -->
-                </div>
-            </section>
-
-            <!-- 6. Experimental Design & Procedure (Sections 5 & 6) -->
-            <section>
-                <h3>5 & 6. Experimental Design & Procedure</h3>
-                <ul>
-                    <li><strong>Factorial Design:</strong> 5 delays × 4 powers × 2 surfaces × 3 trials = 120 trials.</li>
-                    <li><strong>Procedure:</strong> Robot activated at a fixed starting line; attempts to stop upon sensing the wall.</li>
-                </ul>
-                <div class="img-placeholder">
+                <div class="center-text" style="margin-top: 20px;">
+                    <!-- 如果你的小车照片叫 IMG_1673.jpg，就在这里替换 -->
                     <img src="IMG_1673.jpg" width="400">
-                    <img src="IMG_1674.jpg" width="400">
                 </div>
             </section>
 
-            <!-- 7. Safety & Data Collection (Sections 7 & 8) -->
+            <!-- ⭐⭐⭐ 重点：这就是你的互动图表页 ⭐⭐⭐ -->
             <section>
-                <h3>7 & 8. Safety & Data Collection</h3>
-                <ul>
-                    <li><strong>Safety:</strong> Clear testing area, low power to prevent damage, no human subjects.</li>
-                    <li><strong>Data Collection:</strong> Measured in cm. Zero distance recorded upon wall contact.</li>
-                </ul>
-                <div class="img-placeholder">
-                    <img src="IMG_1676.jpg" width="400">
+                <h3>4. Interactive Results (Dashboard)</h3>
+                <p class="center-text" style="font-size: 20px; color: #888;">Select a surface below to update the chart in real-time</p>
+                
+                <div class="center-text">
+                    <select id="surfaceSelect">
+                        <option value="wooden floor">Wooden Floor (Avg over all powers)</option>
+                        <option value="yoga mat">Yoga Mat (Avg over all powers)</option>
+                    </select>
+                </div>
+                
+                <!-- 画图表的画布区域 -->
+                <div style="height: 400px; width: 100%;">
+                    <canvas id="myChart"></canvas>
                 </div>
             </section>
 
-            <!-- 8. Data Analysis Methods (Section 9) -->
+            <!-- Correlation Results -->
             <section>
-                <h3>9. Data Analysis Methods</h3>
-                <p>Analyzed using Python (Pandas, Scikit-learn, Statsmodels):</p>
-                <ul>
-                    <li>Descriptive Statistics</li>
-                    <li>Pearson Correlation Analysis</li>
-                    <li>Multiple Linear Regression</li>
-                </ul>
-            </section>
-
-            <!-- 9. Results: Correlation (Section 10.1 & 10.2) -->
-            <section>
-                <h3>10. Results (Correlation)</h3>
-                <p>Pearson correlation between sensor delay and distance: <strong>r = -0.810</strong>.</p>
+                <h3>5. Results (Correlation)</h3>
+                <p>Pearson correlation between delay and distance: <strong>r = -0.810</strong>.</p>
                 <p>This indicates a <span class="highlight">strong negative correlation</span>.</p>
-                <div class="img-placeholder">
-                    <img src="correlation_heatmap.png" width="400">
+                <div class="center-text">
+                    <!-- 如果你上传了热力图，名字叫 correlation_heatmap.png -->
+                    <img src="correlation_heatmap.png" width="450">
                 </div>
             </section>
 
-            <!-- 10. Results: Regression (Section 10.3 - 10.6) -->
+            <!-- Regression Results -->
             <section>
-                <h3>10. Results (Regression Model)</h3>
+                <h3>6. Results (Regression Model)</h3>
                 <p>The model explained <strong>71%</strong> of the variation (R-Squared = 0.710).</p>
-                <p>Regression Equation:</p>
-                <p class="center-text highlight">Y = 20.095 - 0.035(Delay) - 0.960(Power) + 3.443(Surface)</p>
-                <div class="img-placeholder">
-                    <img src="multiple_regression_plot.png" width="400">
+                <p class="center-text highlight" style="background: #f2f2f2; padding: 10px;">Y = 20.095 - 0.035(Delay) - 0.960(Power) + 3.443(Surface)</p>
+                <div class="center-text">
+                    <!-- 回归分析散点图 -->
+                    <img src="multiple_regression_plot.png" width="450">
                 </div>
             </section>
 
-            <!-- 11. Interpretation of Results (Section 11) -->
+            <!-- Interpretation -->
             <section>
-                <h3>11. Interpretation of Results</h3>
+                <h3>7. Interpretation of Results</h3>
                 <ul>
                     <li><strong>Sensor Delay (p < 0.05):</strong> Statistically significant. Crucial factor for stopping distance.</li>
                     <li><strong>Floor Surface (p < 0.05):</strong> Significant. Yoga mat produced ~3.44 cm more distance.</li>
@@ -157,73 +142,50 @@
                 </ul>
             </section>
 
-            <!-- 12. Zero-Distance Results (Section 11.4) -->
+            <!-- Extreme Condition -->
             <section>
-                <h3>Extreme Condition: Zero-Distance</h3>
+                <h3>8. Extreme Condition: Zero-Distance</h3>
                 <p>At <strong>500 ms</strong> delay, many trials resulted in 0 cm.</p>
                 <p>The system latency was so severe that physical momentum carried the robot into the wall before the brake command executed.</p>
-                <div class="img-placeholder">
-                    <img src="IMG_1677.jpg" width="400">
-                </div>
             </section>
 
-            <!-- 13. Discussion & Conclusion (Sections 12 & 13) -->
+            <!-- Discussion & Conclusion -->
             <section>
-                <h3>12 & 13. Discussion & Conclusion</h3>
+                <h3>9. Discussion & Conclusion</h3>
                 <ul>
-                    <li>The hypothesis was partially supported.</li>
                     <li>Rapid sensor processing is critical for collision avoidance.</li>
                     <li>Even with accurate sensors, a long response delay neutralizes the safety margin.</li>
                 </ul>
             </section>
 
-            <!-- 14. Limitations (Section 14) -->
+            <!-- Future Research -->
             <section>
-                <h3>14. Limitations</h3>
+                <h3>10. Limitations & Future Research</h3>
                 <ul>
-                    <li>Only one robot and two surfaces tested.</li>
-                    <li>Motor power was an approximation of speed rather than direct velocity.</li>
-                    <li>Zero-distance results combined wall contact and complete stopping failure into one value.</li>
-                </ul>
-            </section>
-
-            <!-- 15. Future Research & Engineering (Sections 15 & 16) -->
-            <section>
-                <h3>15 & 16. Future Research & Improvements</h3>
-                <ul>
-                    <li><strong>Future Research:</strong> Use high-speed video to track braking behavior; develop a logistic regression model for collision probability.</li>
-                    <li><strong>Engineering Improvement:</strong> Add adaptive braking based on surface; implement a rule to auto-brake if delay exceeds a safety threshold.</li>
-                </ul>
-            </section>
-
-            <!-- 16. References & Acknowledgments (Sections 17 & 18) -->
-            <section>
-                <h3>17 & 18. References & Acknowledgments</h3>
-                <ul>
-                    <li>Lafvin Technology Hardware & Arduino IDE</li>
-                    <li>Python Software Foundation & Google Colab</li>
-                    <li>Special thanks to Ruben S. Ayala High School and my advisor for guidance on statistics and robotics.</li>
+                    <li><strong>Limitations:</strong> Only one robot tested; zero-distance combined wall contact and stopping failure.</li>
+                    <li><strong>Future Improvements:</strong> Use high-speed video; implement adaptive braking algorithms based on surface friction.</li>
                 </ul>
             </section>
 
             <!-- 结束页 -->
             <section>
-                <h2 class="highlight">Thank You!</h2>
-                <p>Questions?</p>
+                <h2 style="color: #3b5998; font-size: 60px; margin-top: 50px;">Thank You!</h2>
+                <p class="center-text">Any Questions?</p>
             </section>
 
         </div>
     </div>
 
-    <!-- 引入 Reveal.js 运行脚本 -->
+    <!-- 运行脚本 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="script.js"></script>
     <script>
         Reveal.initialize({
-            controls: true,     // 显示右下角控制箭头
-            progress: true,     // 显示底部进度条
-            center: true,       // 内容垂直居中
-            hash: true,         // 在网址显示当前页码
-            transition: 'slide' // 切换动画：slide, fade, convex, concave, zoom
+            controls: true,     
+            progress: true,     
+            center: true,       
+            hash: true,         
+            transition: 'slide' 
         });
     </script>
 </body>
