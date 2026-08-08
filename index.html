@@ -13,70 +13,68 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* 全局高级渐变背景 (Canva 风格) */
+        /* 改回清爽的 Canva 极简背景：非常淡的灰蓝色 */
         body {
-            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%) !important;
+            background: #f0f4f8 !important;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        /* 隐藏Reveal.js默认背景，让自定义背景透出来 */
         .reveal .slide-background { background: transparent !important; }
 
-        /* 高级玻璃质感卡片设计 */
+        /* 白色卡片，带一点圆角和非常柔和的阴影 */
         .canva-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             padding: 40px !important;
             box-sizing: border-box;
             width: 100%;
             height: 100%;
+            border: 1px solid #e1e8ed;
         }
 
-        /* 胶囊形状的高级标题 */
+        /* 标题改成深海蓝色，圆角背景去掉，显得更简洁现代 */
         .reveal h3 { 
-            background: #1e3a8a; 
-            color: white; 
-            display: inline-block;
-            padding: 10px 30px;
-            border-radius: 50px;
+            color: #0f4c81; 
             text-transform: none; 
-            font-weight: bold; 
-            font-size: 32px;
+            font-weight: 800; 
+            font-size: 36px;
             margin-bottom: 25px;
-            box-shadow: 0 4px 10px rgba(30, 58, 138, 0.3);
+            border-bottom: 3px solid #e1e8ed;
+            padding-bottom: 10px;
+            display: inline-block;
         }
         
-        /* 封面大标题 */
-        .reveal h2 { color: #1e3a8a; font-weight: 800; text-transform: none; }
+        .reveal h2 { color: #0f4c81; font-weight: 800; text-transform: none; }
 
-        /* 正文排版优化 */
-        .reveal p, .reveal li { font-size: 24px; text-align: left; color: #444; line-height: 1.5; }
+        .reveal p, .reveal li { font-size: 24px; text-align: left; color: #333; line-height: 1.5; }
         .center-text { text-align: center !important; }
-        .highlight { color: #e74c3c; font-weight: bold; background: #fde8e8; padding: 2px 8px; border-radius: 5px;}
+        .highlight { color: #e74c3c; font-weight: bold; }
         
-        /* 双栏排版 (左边文字，右边图片) */
+        /* 双栏排版 */
         .two-col {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 30px;
+            gap: 20px;
         }
         .col-text { flex: 1; text-align: left; }
         .col-img { flex: 1; text-align: center; }
         
-        /* 图片加上圆角和高级阴影 */
+        /* 强制图片不准超出容器 */
         .col-img img, .img-container img { 
-            border-radius: 12px; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+            max-width: 100%;
             max-height: 350px;
+            object-fit: cover;
         }
 
         /* 交互菜单和表格样式 */
-        select { padding: 10px; font-size: 20px; border: 2px solid #1e3a8a; border-radius: 8px; cursor: pointer; background: white; font-weight: bold; color: #1e3a8a;}
-        .table-wrapper { height: 320px; overflow-y: auto; margin-top: 15px; border-radius: 10px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        select { padding: 10px; font-size: 20px; border: 2px solid #0f4c81; border-radius: 8px; cursor: pointer; background: white; font-weight: bold; color: #0f4c81;}
+        .table-wrapper { height: 320px; overflow-y: auto; margin-top: 15px; border-radius: 8px; border: 1px solid #eee; }
         table { width: 100%; border-collapse: collapse; font-size: 18px; background: white; }
-        th { background-color: #1e3a8a; color: white; padding: 12px; position: sticky; top: 0; z-index: 2;}
+        th { background-color: #0f4c81; color: white; padding: 12px; position: sticky; top: 0; z-index: 2;}
         td { padding: 10px; border-bottom: 1px solid #eee; text-align: center; }
         tr:hover { background-color: #f8f9fa; }
     </style>
@@ -129,7 +127,7 @@
                 </div>
             </section>
 
-            <!-- 5. Materials (双栏布局) -->
+            <!-- 5. Materials -->
             <section>
                 <div class="canva-card two-col">
                     <div class="col-text">
@@ -148,25 +146,26 @@
                 </div>
             </section>
 
-            <!-- 6. Experimental Design (多图展示) -->
+            <!-- 6. Experimental Design (修复了溢出的图片) -->
             <section>
                 <div class="canva-card">
                     <h3>5. Experimental Design</h3>
                     <p><strong>Factorial Design:</strong> 120 trials across two unique surfaces to test varying friction levels.</p>
                     <div class="two-col" style="margin-top: 20px;">
-                        <div class="col-img">
-                            <img src="wooden.png" alt="Wooden Floor">
-                            <p class="center-text" style="font-size: 18px;">Surface A: Wooden Floor</p>
+                        <!-- 限制宽度，强制并排 -->
+                        <div style="flex: 1; text-align: center;">
+                            <img src="wooden.png" alt="Wooden Floor" style="width: 100%; height: 220px; object-fit: cover; border-radius: 8px;">
+                            <p style="font-size: 18px; margin-top: 5px; text-align: center;">Surface A: Wooden Floor</p>
                         </div>
-                        <div class="col-img">
-                            <img src="Yoga mat.png" alt="Yoga Mat">
-                            <p class="center-text" style="font-size: 18px;">Surface B: Yoga Mat</p>
+                        <div style="flex: 1; text-align: center;">
+                            <img src="Yoga mat.png" alt="Yoga Mat" style="width: 100%; height: 220px; object-fit: cover; border-radius: 8px;">
+                            <p style="font-size: 18px; margin-top: 5px; text-align: center;">Surface B: Yoga Mat</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 7. Data Collection (双栏) -->
+            <!-- 7. Data Collection -->
             <section>
                 <div class="canva-card two-col">
                     <div class="col-text">
@@ -219,7 +218,7 @@
                 </div>
             </section>
 
-            <!-- 11. Results: Correlation (双栏) -->
+            <!-- 11. Results: Correlation -->
             <section>
                 <div class="canva-card two-col">
                     <div class="col-text">
@@ -234,13 +233,13 @@
                 </div>
             </section>
 
-            <!-- 12. Results: Regression (双栏) -->
+            <!-- 12. Results: Regression -->
             <section>
                 <div class="canva-card two-col">
                     <div class="col-text">
                         <h3>10. Regression Model</h3>
                         <p>Multiple Linear Regression explained <strong>71%</strong> of the variance (R² = 0.710).</p>
-                        <p style="background: #f1f5f9; padding: 10px; border-left: 5px solid #1e3a8a; font-size: 20px;">
+                        <p style="background: #f8f9fa; padding: 10px; border-left: 5px solid #0f4c81; font-size: 20px;">
                             Y = 20.095 - 0.035(Delay) - 0.960(Power) + 3.443(Surface)
                         </p>
                     </div>
@@ -250,7 +249,7 @@
                 </div>
             </section>
 
-            <!-- 14. Zero-Distance (双栏) -->
+            <!-- 14. Zero-Distance -->
             <section>
                 <div class="canva-card two-col">
                     <div class="col-text">
@@ -290,7 +289,6 @@
 
     <!-- 运行脚本 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
-    <!-- 我们自己的图表数据脚本 -->
     <script src="script.js"></script>
     <script>
         Reveal.initialize({
@@ -298,7 +296,7 @@
             progress: true, 
             center: true, 
             hash: true, 
-            transition: 'fade', // 改成了类似 Canva 的高级淡入淡出动画
+            transition: 'fade',
             margin: 0.1
         });
     </script>
